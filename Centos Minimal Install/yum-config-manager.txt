@@ -1,0 +1,2 @@
+Using Yum-Utils provided yum-config-manager:
+[root@server ~]# yum install -y yum-utils

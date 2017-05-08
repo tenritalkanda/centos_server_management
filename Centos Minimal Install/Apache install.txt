@@ -1,0 +1,23 @@
+//--install apache
+yum -y install httpd
+
+//--allow apache through firewall
+//--allow the default http and https port 80 and 443
+sudo firewall-cmd --permanent --add-port=80/tcp
+sudo firewall-cmd --permanent --add-port=443/tcp
+
+//--and reload the firewall
+sudo firewall-cmd --reload
+
+//--then start apache
+sudo systemctl start httpd
+
+//--start apache at boot
+sudo systemctl enable httpd
+
+//--check status apache
+sudo systemctl status httpd
+
+
+//--to stop apache
+sudo systemctl stop httpd

@@ -1,0 +1,1 @@
+from postgresql\bin directory> psql -p port -h hostname -d databasename -U username -x -f "filename with directory"
