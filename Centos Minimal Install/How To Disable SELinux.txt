@@ -26,3 +26,20 @@ Step 3. Rebooting your linux system to take effect.
 reboot
 
 after reboot, verify the status with sestatus
+
+///////////////////////////////////////////////////////////////
+SELinux Runtime Configuration
+
+One of the fastest ways to switch between enforcing and permissive modes is with the ‘setenforce’ command. We can use ‘setenforce 0’ to swap to permissive mode, or ‘setenforce 1’ to swap to enforcing mode.
+
+[root@centos7 ~]# getenforce
+Enforcing
+[root@centos7 ~]# setenforce 0
+[root@centos7 ~]# getenforce
+Permissive
+[root@centos7 ~]# setenforce 1
+[root@centos7 ~]# getenforce
+Enforcing
+
+Note that this only changes the runtime setting, if you perform a system reboot the option stored in the /etc/selinux/config file will be used at next boot. We cannot disable selinux at runtime, as swapping to or from the disabled mode requires a system reboot.
+/////////////////////////////////////////////////////////////
