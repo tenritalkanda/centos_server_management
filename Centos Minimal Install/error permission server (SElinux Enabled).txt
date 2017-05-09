@@ -1,9 +1,12 @@
-for solving problem permission denied on storage folder with selinux setenforce 1 : (server selinux will remain 1)
+//--for solving problem permission denied on storage folder with selinux setenforce 1 : (server selinux will remain 1)
 chcon -R -t httpd_sys_rw_content_t storage
-for solving database with selinux :
+chmod -R guo+w app
+
+//--for solving database with selinux :
 setsebool -P httpd_can_network_connect_db on
 
-chmod -R guo+w app
+//--for custom port on DB :
+semanage port -a -t postgresql_port_t -p tcp 5433
 
 PHP Fatal error:  Uncaught UnexpectedValueException: The stream or file "/var/www/html/webcarrent/src/storage/logs/laravel.log" could not be opened: failed to open stream: Permission denied in /var/www/html/webcarrent/src/vendor/monolog/monolog/src/Monolog/Handler/StreamHandler.php:107\nStack trace:\n#0 /var/www/html/webcarrent/src/vendor/monolog/monolog/src/Monolog/Handler/AbstractProcessingHandler.php(37): Monolog\\Handler\\StreamHandler->write(Array)\n#1 /var/www/html/webcarrent/src/vendor/monolog/monolog/src/Monolog/Logger.php(337): Monolog\\Handler\\AbstractProcessingHandler->handle(Array)\n#2 /var/www/html/webcarrent/src/vendor/monolog/monolog/src/Monolog/Logger.php(616): Monolog\\Logger->addRecord(400, Object(UnexpectedValueException), Array)\n#3 /var/www/html/webcarrent/src/vendor/laravel/framework/src/Illuminate/Log/Writer.php(203): Monolog\\Logger->error(Object(UnexpectedValueException), Array)\n#4 /var/www/html/webcarrent/src/vendor/laravel/framework/src/Illuminate/Log/Writer.php(114): Illuminate\\Log\\Writer->writeLog('error', O in /var/www/html/webcarrent/src/vendor/monolog/monolog/src/Monolog/Handler/StreamHandler.php on line 107
 [Mon May 08 07:08:19.638029 2017] [:error] [pid 3252] [client 192.168.90.77:57261] PHP Fatal error:  Uncaught UnexpectedValueException: The stream or file "/var/www/html/webcarrent/src/storage/logs/laravel.log" could not be opened: failed to open stream: Permission denied in /var/www/html/webcarrent/src/vendor/monolog/monolog/src/Monolog/Handler/StreamHandler.php:107\nStack trace:\n#0 /var/www/html/webcarrent/src/vendor/monolog/monolog/src/Monolog/Handler/AbstractProcessingHandler.php(37): Monolog\\Handler\\StreamHandler->write(Array)\n#1 /var/www/html/webcarrent/src/vendor/monolog/monolog/src/Monolog/Logger.php(337): Monolog\\Handler\\AbstractProcessingHandler->handle(Array)\n#2 /var/www/html/webcarrent/src/vendor/monolog/monolog/src/Monolog/Logger.php(616): Monolog\\Logger->addRecord(400, Object(Symfony\\Component\\Debug\\Exception\\FatalErrorException), Array)\n#3 /var/www/html/webcarrent/src/vendor/laravel/framework/src/Illuminate/Log/Writer.php(203): Monolog\\Logger->error(Object(Symfony\\Component\\Debug\\Exception\\FatalErrorException), Array)\n#4 /var/www/html/webcarrent/src/vendor/laravel/framework/src/Illuminate/Log/W in /var/www/html/webcarrent/src/vendor/monolog/monolog/src/Monolog/Handler/StreamHandler.php on line 107

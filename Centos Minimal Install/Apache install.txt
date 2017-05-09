@@ -1,6 +1,9 @@
 //--install apache
 yum -y install httpd
 
+//--install php
+sudo yum install php
+
 //--allow apache through firewall
 //--allow the default http and https port 80 and 443
 sudo firewall-cmd --permanent --add-port=80/tcp
@@ -21,3 +24,6 @@ sudo systemctl status httpd
 
 //--to stop apache
 sudo systemctl stop httpd
+
+//--Check Apache user for web user owner permission
+ps axo user,group,comm | egrep '(apache|httpd)'

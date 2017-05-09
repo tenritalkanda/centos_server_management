@@ -1,0 +1,88 @@
+yum install https://yum.postgresql.org/9.6/redhat/rhel-7.3-x86_64/pgdg-redhat96-9.6-3.noarch.rpm
+yum install postgresql96-server postgresql96-contrib
+//--create postgres9.6 data directory
+/usr/pgsql-9.6/bin/postgresql96-setup initdb
+
+[root@database ~]# service postgresql-9.6 start
+[root@database ~]# systemctl enable postgresql-9.6
+
+https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/sec-Configuring_Yum_and_Yum_Repositories.html
+
+//--Access PostgreSQL command prompt
+su - postgres
+
+To login to postgresql, enter the command:
+psql
+----------------------------------------------
+//--Set “postgres” user password
+Login to postgresql prompt,
+su - postgres
+psql
+.. and set postgres password with following command:
+postgres=# \password postgres 
+Enter new password: 
+Enter it again: 
+postgres=# \q
+-----------------------------------------------
+//--Switch to postgres user:
+su - postgres
+
+//--Create user senthil.
+$ createuser senthil
+
+//--Create database:
+$ createdb mydb
+
+//--Delete Users and Databases
+To delete the database, switch to postgres user:
+su - postgres
+Enter command:
+$ dropdb <database-name>
+
+//--To delete a user, enter the following command:
+$ dropuser <user-name>
+---------------------------------------------------------
+//--Configure PostgreSQL-Configure TCP/IP
+Edit file /var/lib/pgsql/9.4/data/postgresql.conf:
+vi /var/lib/pgsql/9.4/data/postgresql.conf
+
+Find the lines:
+[...]
+#listen_addresses = 'localhost'
+[...]
+#port = 5432
+[...]
+
+Uncomment both lines, and set the IP address of your postgresql server or set ‘*’ to listen from all clients as shown below:
+listen_addresses = '*'
+port = 5432
+
+//--On CentOS 6.x systems:
+/etc/init.d/postgresql-9.4 restart
+
+//--On CentOS 7 systems:
+systemctl restart postgresql-9.4
+
+//--restore DB (run sql file)
+from postgresql\bin directory> psql -p port -h hostname -d databasename -U username -x -f "filename with directory"
+
+Adjust SELinux
+Run the following command to make PostgreSQL work if SELinux enabled on your system.
+setsebool -P httpd_can_network_connect_db 1
+
+//--Adjust Iptables/Firewall
+adjust iptables to access postgresql from remote systems.
+On CentOS 6.x systems:
+vi /etc/sysconfig/iptables
+
+Add the following line:
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 5432 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+
+//--Save and exit the file. Restart iptables service.
+service iptables restart
+
+On CentOS 7 systems:
+firewall-cmd --permanent --add-port=5432/tcp
+firewall-cmd --permanent --add-port=80/tcp
+firewall-cmd --reload

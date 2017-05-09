@@ -1,0 +1,6 @@
+https://www.tecmint.com/nmap-command-examples/
+//--install nmap
+# yum install nmap
+
+//--to check all port in specific ip network
+# nmap IPaddress
