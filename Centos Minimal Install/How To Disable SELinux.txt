@@ -1,0 +1,28 @@
+For those of you who didn’t know, Security-Enhanced Linux (SELinux) is a Linux feature that provides the mechanism for supporting access control security policies. By default, when you installed the linux operation system, The SELinux service is enabled, As some softwares do not support SELinux that the state is enable, So you need to disable or turn off the SELinux config.
+
+This article assumes you have at least basic knowledge of linux, know how to use the shell, and most importantly, you host your site in your own VPS. The turning off SELinux is quite simple. I will show you through the step by step turning off or disabling SELinux in CentOS 7 server.
+
+Disable SELinux on CentOS 7 :
+Step 1. First we need to see how SELinux is configured, issue the sestatus command.
+sestatus
+
+Step 2. Open selinux configuration file.
+nano /etc/sysconfig/selinux
+
+Change “SELINUX=enforcing” to “SELINUX=disabled” and save the configuration file:
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=disabled
+# SELINUXTYPE= can take one of these two values:
+#     targeted - Targeted processes are protected,
+#     minimum - Modification of targeted policy. Only selected processes are protected.
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted
+
+Step 3. Rebooting your linux system to take effect.
+reboot
+
+after reboot, verify the status with sestatus
